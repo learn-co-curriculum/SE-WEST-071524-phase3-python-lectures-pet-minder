@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>P3L2 - Python Data Structures</title>
+
+  <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+  <meta name="author" content="Hakim El Hattab">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reset.css">
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reveal.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- highlight Theme -->
+  
+  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/monokai.min.css">
+  
+	
+		
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/chalkboard/style.css">
+	
+	
+	
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/customcontrols/style.css">
+  
+	
+
+
+
+  <!-- Revealjs Theme -->
+  
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/night.css" id="theme">
+  
+  
+
+  <link rel="stylesheet" href="libs/styles/tasklist.css">
+	<link rel="stylesheet" href="libs/styles/iota.css">
+	<link rel="stylesheet" href="libs/styles/layout.css">
+
+
+  <!-- Revealjs Theme -->
+  
+
+   <!-- css list -->
+	
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  
+
+   
+
+</head>
+
+<body>
+
+   
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      
+
+
+    
+        <section >
+            
+            <h2>Python Data Structures 🏗️</h2>
+<img alt="python logo" src="./python-logo-only.png"/>
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3><strong> ✅ Objectives </strong></h3>
+<ul>
+<li>Review the Sequence types: <code>list</code>, <code>tuple</code>, <code>range</code> (and <code>str</code>)
+<ul>
+<li>Lists: understand CRUD operations with list values</li>
+<li>Tuples:
+<ul>
+<li>Discuss: <code>mutable</code> vs <code>immutable</code></li>
+<li>Create and access values in tuples</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <ul>
+<li>Ranges: and how they’re useful in loops</li>
+<li>Learn about Set types (time permitting)</li>
+<li>Dictionaries:
+<ul>
+<li>a mapping data structure</li>
+<li>know all CRUD operations</li>
+</ul>
+</li>
+<li>Loops: create <code>for</code> and <code>while</code> loops with sequences</li>
+<li>Use list comprehensions to emulate JS <code>map</code>, <code>filter</code> and <code>find</code> functions</li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>List... array's Pythonic twin?</h3>
+<ul>
+<li>ordered collection of elements</li>
+<li>aka sequence</li>
+<li>mutable</li>
+</ul>
+<pre>
+  <code class="language-python">
+  my_list = ["hello", "world", 42, ["another", "list"]]
+  </code>
+</pre>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <div style="display: flex; flex-direction: column;">
+  <div>
+    <img src="./Built-in-List-Functions-in-Python-01.jpg">
+  </div>
+  <div style="font-size: 1.5rem; margin: 0.85rem 1rem;">
+    Let's dive into the code! 🌊
+  </div>
+</div>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Tuples–when values are forever 💎</h3>
+<ul>
+<li>ordered collection of values</li>
+<li>aka sequence</li>
+<li><strong><em>immutable</em></strong></li>
+</ul>
+<pre>
+  <code class="language-python">
+    my_tuple = (4, 2, "Miyuki", True)
+  </code>
+</pre>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <img src="./Python-range-function-explained.webp" />
+<pre>
+  <code class="language-python">
+    for num in range(8):
+      print(f"The count is {num}")
+  </code>
+</pre>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Dictionaries 📖 Python's JSON</h3>
+<h5>Creating dictionaries:</h5>
+<pre>
+  <code class="language-python">
+    cat_1 = {
+      'name': 'Simon',
+      'color': 'ginger',
+      'age': 10
+    }
+  </code>
+  <code class="language-python">
+    cat_2 = dict(name='Miyuki', color='grey', age=10)
+  </code>
+</pre>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h5>Reading and adding values 👓</h5>
+<pre><code class="language-python" data-line-numbers="1-5|6-7|8-9|10-11|12-13">cat_1 = {
+      'name': 'Simon',
+      'color': 'ginger',
+      'age': 10
+}
+cat_1['color']
+# => ginger
+cat_1.get('age')
+# => 10
+cat_1.get('mood')
+# => None
+cat_1['mood'] = 'hungry'
+cat_1.setdefault('breed', 'Munchkin')
+</code></pre>
+<h6 class="fragment">Let's try it! 🚀</h6>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h5>Updating and Deleting values 📝 ❌</h5>
+<pre><code class="language-python" data-line-numbers="1-6|7-10|11-14">cat_1 = {
+      'name': 'Simon',
+      'color': 'ginger',
+      'age': 10,
+      'mood': 'hungry'
+}
+cat_1['mood'] = 'sleepy'
+cat_1.update(age=11, mood='feisty')
+print(cat_1)
+# {'name': 'Simon', 'color': 'ginger', 'age': 11, 'mood': 'feisty'}
+del cat_1('age')
+cat_1.pop('mood')
+print(cat_1)
+# {'name': 'Simon', 'color': 'ginger'}
+</code></pre>
+<h6 class="fragment">Let's do it! 🛠️</h6>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h5><code>For</code> loops: let me reiterate 🐈🐈🐈</h5>
+<img src="./for-loop-in-python.webp" />
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4><code>break</code> keyword 🔑</h4>
+<div style="font-size: 1.5rem">
+In a loop, the <code>break</code> keyword escapes the loop, regardless of the iteration number. Once <code>break</code> executes, the program will continue to execute after the loop.
+</div>
+<pre><code class="language-python">numbers = [0, 254, 2, -1, 3]
+
+for num in numbers:
+  if (num &lt; 0):
+    print(&quot;Negative number detected!&quot;)
+    break
+  print(num)
+  
+# 0
+# 254
+# 2
+# Negative number detected!
+
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4><code>continue</code> keyword 🔑</h4>
+<div style="font-size: 1.5rem">
+In Python, the <code>continue</code> keyword is used inside a loop to skip the remaining code inside the loop code block and begin the next loop iteration.
+</div>
+<pre><code class="language-python">big_number_list = [1, 2, -1, 4, -5, 5, 2, -9]
+
+# Print only positive numbers:
+for i in big_number_list:
+  if i &lt; 0:
+    continue
+  print(i)
+
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4><code>while</code> loops 🔍</h4>
+<div style="font-size: 1.5rem">
+In Python, a <code>while</code> loop will repeatedly execute a code block as long as a condition evaluates to <code>True</code>.
+</div>
+<pre><code class="language-python">hunger = 5
+while hunger &gt; 0:
+  print('munch!')
+  hunger -= 1 # be sure to progress your condition towards the base case!
+# this will print 'munch!' 5 times
+
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>List Comprehension 💡</h4>
+<div style="font-size: 1.5rem">
+List comprehension is a simpler method to create a list from an existing list. It is generally a list of iterables generated with an option to include only the items which satisfy a condition.
+</div>
+<img src="./list-comp-diagram.png" />
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            
+            </section>
+    
+
+
+    </div>
+
+
+  </div>
+
+  <div class="line top"></div>
+  <div class="line bottom"></div>
+  <div class="line left"></div>
+  <div class="line right"></div>
+
+  <script src="libs/reveal.js/4.3.1/reveal.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/markdown/markdown.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/highlight/highlight.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/math/math.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/fullscreen/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/svg.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/Chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/d3.v3.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3.patch.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/queue.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/topojson.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/function-plot.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/customcontrols/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/embed-tweet/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/verticator/verticator.js"></script>
+
+<script src="libs/reveal.js/4.3.1/plugin/zoom/zoom.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/search/search.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/menu/menu.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chalkboard/plugin.js"></script>
+
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/plugin.js"></script>  -->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/recorder.js"></script>-->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/RecordRTC.js"></script>-->
+
+  
+
+<script>
+  const printPlugins = [
+      RevealNotes,
+      RevealHighlight,
+      RevealMath.MathJax3,
+      RevealAnimate,
+      RevealChalkboard, 
+			RevealEmbedTweet,
+			RevealChart,
+		];
+
+		const plugins =  [...printPlugins,
+		RevealZoom, 
+		RevealSearch, 
+				RevealMarkdown, 
+				RevealMenu, 
+				RevealFullscreen,
+				RevealAnything,
+				//RevealAudioSlideshow,
+				//RevealAudioRecorder,
+				RevealCustomControls, 
+				// poll
+				// question
+				// seminar
+				Verticator 
+				 ]
+
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+      controlsTutorial: true,
+      controlsLayout: 'bottom-right',
+      controlsBackArrows: 'faded',
+      progress: true,
+      slideNumber: false,
+      //#showSlideNumber "all" "print" "speaker"
+      hash: true, //# hash: false,
+      //# respondToHashChanges: true,
+      //# history: false,
+      keyboard: true,
+      //#keyboardCondition: null,
+      overview: true,
+      center: true,
+      touch: true,
+      loop: false,
+      rtl: false,
+      //#navigationMode: 'default', linear grid
+      shuffle: false,
+      fragments: true,
+      fragmentInURL: false,
+      embedded: false,
+      help: true,
+      //#pause: true
+      showNotes: false,
+      autoPlayMedia: false, // TODO fix this to a nullable value
+      //#preloadIframes: null. true false
+      //#autoAnimate: true
+      //#autoAnimateMatcher: null,
+      //#autoAnimateEasing: 'ease',
+      //autoAnimateDuration: 1.0,
+      //#autoAnimateUnmatched: true
+      //#autoAnimateStyles: []
+      autoSlide: 0, // TODO fix this to a falseable value
+      autoSlideStoppable: true,
+      autoSlideMethod: '0',
+      defaultTiming: 120,
+      mouseWheel: false,
+      //#previewLinks: false
+      //#postMessage: true, // TODO : this can cause issues with the vscode api ???
+      //#postMessageEvents: false,
+      //#focusBodyOnPageVisibilityChange: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      //#pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+      //#pdfSeparateFragments: true,
+      //#pdfPageHeightOffset: -1,
+      viewDistance: 3,
+      //#mobileViewDistance: 2,
+      display: 'block',
+      //#hideInactiveCursor: true,
+      //#hideCursorTime: 5000
+
+      // Parallax Background
+      parallaxBackgroundImage: '',
+      parallaxBackgroundSize: '',
+      parallaxBackgroundHorizontal: 0,
+      parallaxBackgroundVertical: 0,
+
+      //Presentation Size
+      width: 960,
+			height: 700,
+			margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2,
+      disableLayout: false,
+
+      audio: {
+        prefix: 'audio/', // audio files are stored in the "audio" folder
+        suffix: '.ogg', // audio files have the ".ogg" ending
+        textToSpeechURL: null, // the URL to the text to speech converter
+        defaultNotes: false, // use slide notes as default for the text to speech converter
+        defaultText: false, // use slide text as default for the text to speech converter
+        advance: 0, // advance to next slide after given time in milliseconds after audio has played, use negative value to not advance
+        autoplay: false, // automatically start slideshow
+        defaultDuration: 5, // default duration in seconds if no audio is available
+        defaultAudios: true, // try to play audios with names such as audio/1.2.ogg
+        playerOpacity: 0.05, // opacity value of audio player if unfocused
+        playerStyle: 'position: fixed; bottom: 4px; left: 25%; width: 50%; height:75px; z-index: 33;', // style used for container of audio controls
+        startAtFragment: false, // when moving to a slide, start at the current fragment or at the start of the slide
+      },
+      
+      chalkboard: { // font-awesome.min.css must be available
+        //src: "chalkboard/chalkboard.json",
+        storage: "chalkboard-demo",
+      },
+      
+			customcontrols: {
+					controls: [
+      						{
+						  id: 'toggle-overview',
+						  title: 'Toggle overview (O)',
+						  icon: '<i class="fa fa-th"></i>',
+						  action: 'Reveal.toggleOverview();'
+						}
+						,
+      {
+        icon: '<i class="fa fa-pen-square"></i>',
+        title: 'Toggle chalkboard (B)',
+        action: 'RevealChalkboard.toggleChalkboard();'
+      },
+      {
+        icon: '<i class="fa fa-pen"></i>',
+        title: 'Toggle notes canvas (C)',
+        action: 'RevealChalkboard.toggleNotesCanvas();'
+      }
+      
+				]
+			},
+			chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+			},
+			math: {
+				mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+				config: 'TeX-AMS_HTML-full',
+				// pass other options into `MathJax.Hub.Config()`
+				TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				anything: [ 
+				{
+		className: "plot",
+		defaults: {width:500, height: 500, grid:true},
+		initialize: (function(container, options){ options.target = "#"+container.id; functionPlot(options) })
+	 },
+	 {
+		className: "chart",  
+		initialize: (function(container, options){ container.chart = new Chart(container.getContext("2d"), options);  })
+	 },
+	 {
+		className: "anything",
+		initialize: (function(container, options){ if (options && options.initialize) { options.initialize(container)} })
+	 },
+					],
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: (window.location.search.match(/print-pdf/gi) ? printPlugins : plugins ) 
+		});
+			
+
+
+	    // Change chalkboard theme : 
+		function changeTheme(input) {
+			var config = {};
+			config.theme = input.value;
+			Reveal.getPlugin("RevealChalkboard").configure(config);
+			input.blur();
+		}
+
+		// // Handle the message inside the webview
+        // window.addEventListener('message', event => {
+
+        //     const message = event.data; // The JSON data our extension sent
+
+        //     switch (message.command) {
+        //         case 'refactor':
+        //             Reveal.toggleHelp();
+        //     }
+        // });
+
+		if (window.location.search.match(/print-pdf-now/gi)) {
+      		setTimeout(() => {
+				window.print();
+			  }, 2500);
+			
+    }
+</script>
+
+</body>
+
+</html>
