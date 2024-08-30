@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>P3L5 - SQL Fundamentals and Table Relations</title>
+
+  <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+  <meta name="author" content="Hakim El Hattab">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reset.css">
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/reveal.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- highlight Theme -->
+  
+  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/monokai.min.css">
+  
+	
+		
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/chalkboard/style.css">
+	
+	
+	
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/customcontrols/style.css">
+  
+	
+
+
+
+  <!-- Revealjs Theme -->
+  
+  <link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/night.css" id="theme">
+  
+  
+
+  <link rel="stylesheet" href="libs/styles/tasklist.css">
+	<link rel="stylesheet" href="libs/styles/iota.css">
+	<link rel="stylesheet" href="libs/styles/layout.css">
+
+
+  <!-- Revealjs Theme -->
+  
+
+   <!-- css list -->
+	
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  
+
+   
+
+</head>
+
+<body>
+
+   
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      
+
+
+    
+        <section >
+            
+            <h3>Intro to Databases</h3>
+<p><img src="./sqlite-logo-svg-transparent-vec.png" alt="sql_lite"></p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>Putting Things in Context.</h4>
+<p>Databases allow us to store and perform CRUD actions on data outside of our code therefore allowing our changes to persist to the next session.</p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>ORM Analogy</h4>
+<div style="width: 65%">
+<p><img src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1651161995/Flatiron%20Slideshow%20images/analogy.drawio.svg" alt="ORM Analogy"></p>
+</div>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h2>Where We’re Headed</h2>
+<p><img src="https://raw.githubusercontent.com/learn-co-students/phase3-lecture-repo-template/04_begin_intro_to_databases/04_intro_to_databases/demo/object-method-sql-query-return.drawio.svg?token=GHSAT0AAAAAABS54V3M5DXF4WXV6T3OUTPUYTJ6M6A" alt="The Pattern"></p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>The Flow</h3>
+<p>At the end of the phase, we’ll be building out our own API that will sit between our React app and our database, enacting the following data flow:</p>
+<ul>
+<li class="fragment">React App </li>
+<li class="fragment">Fetches to API</li>
+<li class="fragment">API interacts with database and sends response back to the browser/client</li>
+<li class="fragment">Resolved Promise from fetch leads to change in state</li>
+<li class="fragment">React updates the DOM</li>
+</ul>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Database Examples</h3>
+<h4>Whats wrong with this table?</h4>
+<div style="width: 70%">
+<p><img src="./bad-data-1.png" alt="bad-data-1"></p>
+</div>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>Whats wrong with this table?</h4>
+<p><img src="./bad-data-2.png" alt="bad-data-2"></p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>Correct table</h4>
+<div style="width: 50%">
+<p><img src="./first_normal_form.png" alt="first_normal_form"></p>
+</div>
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>one-to-many</h4>
+<p><img src="./one-to-many.png" alt="one-to-many"></p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>many-to-many</h4>
+<p><img src="./many-to-many.png" alt="many-to-many"></p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Pet Minder/Rover Clone</h3>
+<h4>Key Features:</h4>
+<ul>
+<li>Add persistence
+<ul>
+<li>A Read (SELECT) operation to retrieve persisted pets</li>
+<li>A Create (INSERT INTO) operation to persist new pets</li>
+<li>An Update (UPDATE) operation to update a persisted pet</li>
+<li>An Delete (DELETE) operation to delete a persisted pet</li>
+</ul>
+</li>
+</ul>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>DB Config</h3>
+<p>Check for prior installation of <code>sqlite</code></p>
+<pre><code class="language-bash">which sqlite3
+</code></pre>
+<p>If not installed, you can install it on MacOS with Homebrew:</p>
+<pre><code class="language-bash">brew install sqlite
+</code></pre>
+<p>or for Windows, go to this <a href="https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-sqlite">link</a></p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>GUI with your SQLite databases</h3>
+<p>Install <a href="https://sqlitebrowser.org/">DB Browser for SQLite</a> Mac/Windows/Linux</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite">SQLite VSCode Extension</a> OR
+<a href="https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer">SQLite Viewer</a></p>
+<ul>
+<li>WSL <a href="https://www.youtube.com/watch?v=bKixKfb1J1o">Using SQLite with VS Code Extension</a>
+<ul>
+<li>Right click DB and select “Open database”</li>
+<li>In SQLite Explorer, right click the Database and select “New query”</li>
+<li>Write the query, highlight the query, click right and select “Run query”</li>
+</ul>
+</li>
+</ul>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h2>SQL</h2>
+<p>SQL(Structured Query Language): A language that allows us to manipulate databases.</p>
+<p>SQLite is a library that will allow us to create relational SQL databases.</p>
+<p>A relational database is a database of tables and rows with data points that relate to one another. Tables have unique Primary keys and columns that contain data of varying types.</p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>Delete Tables</h4>
+<pre><code class="language-sql">DROP TABLE dogs;
+</code></pre>
+<h4>Create the Tables for pets and owners</h4>
+<pre><code class="language-sql">CREATE TABLE owners(
+  id INTEGER PRIMARY KEY,
+  name TEXT,
+  address TEXT,
+  email TEXT,
+  phone INTEGER
+);
+
+
+CREATE TABLE pets(
+  id INTEGER PRIMARY KEY,
+  owner_id INTEGER,
+  name TEXT,
+  birthdate INTEGER,
+  breed TEXT,
+  favorite_treats TEXT,
+  last_fed_at DATETIME,
+  last_walked_at DATETIME,
+    FOREIGN KEY (owner_id) REFERENCES owners(id)
+);
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Update Table</h3>
+<pre><code class="language-sql">ALTER TABLE pets
+ADD COLUMN image_url TEXT;
+
+ALTER TABLE pets
+RENAME COLUMN birthdate TO age;
+
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Add Data to Table</h3>
+<pre><code class="language-sql">INSERT INTO owners(name, address, email, phone) 
+VALUES ('ix', '999 8th st Seattle Wa 90000', 'ix_is_cool@gmail.com', '9991231234');
+
+INSERT INTO owners(name, address, email, phone) 
+VALUES ('Adam', '000 dr sw San Francisco CA 90000', 'cyberpunk999@gmail.com', '0001239999');
+
+INSERT INTO pets(name, age, breed, favorite_treats, image_url, owner_id) 
+VALUES ('Luke', '2', 'domestic longhair', 'bacon', 'https://res.cloudinary.com/dnocv6uwb/image/upload/v1631229064/zx6CPsp_d_utkmww.webp', 2);
+
+INSERT INTO pets(name, age, breed, favorite_treats, image_url, owner_id) 
+VALUES ('rose', '11', 'domestic longhair', 'house plants', 'https://res.cloudinary.com/dnocv6uwb/image/upload/v1631229038/EEE90-E50-25-F0-4-DF0-98-B2-0-E0-B6-F9-BAA89_menwgg.jpg', 1);
+
+INSERT INTO pets(name, age, breed, favorite_treats, image_url, owner_id) 
+VALUES ('leia', '2', 'domestic Shorthair', 'bacon', 'https://res.cloudinary.com/dnocv6uwb/image/upload/v1631229011/8136c615d670e214f80de4e7fcdf8607--cattle-dogs-mans_vgyqqa.jpg', 2);
+
+INSERT INTO pets(name, age, breed, favorite_treats, image_url, owner_id) 
+VALUES ('Chop', '5', 'shiba inu', 'cheese', 'https://res.cloudinary.com/dnocv6uwb/image/upload/v1629822267/cdbd77592e3ef91e8cc1cf67d936f94f_fkozjt.jpg', 1);
+
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3>Query Table Data</h3>
+<pre><code class="language-sql">SELECT * FROM pets
+
+SELECT * FROM pets 
+WHERE name = 'rose';
+
+SELECT * FROM pets 
+WHERE favorite_treats = 'bacon';
+
+SELECT * FROM pets
+WHERE age &lt; 5;
+
+UPDATE pets
+SET age = 12
+WHERE name = 'rose';
+
+UPDATE pets
+SET favorite_treats = 'cheese'
+
+
+DELETE FROM pets WHERE name = 'Chop';
+
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>Join Tables</h4>
+<p><img src="./Types-of-Joins-in-SQl.webp" alt="types-of-joins"></p>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>one-to-many</h4>
+<pre><code class="language-sql">SELECT pets.name, owners.name as 'owner'
+FROM pets
+JOIN owners ON pets.owner_id = owners.id;
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h4>many-to-many</h4>
+<h5>CREATE table</h5>
+<pre><code class="language-sql">CREATE TABLE handlers(
+  id INTEGER PRIMARY KEY,
+  name TEXT,
+  email TEXT,
+  phone INTEGER
+);
+
+CREATE TABLE jobs(
+  id INTEGER PRIMARY KEY,
+  time DATETIME,
+  request TEXT,
+  pet_id INTEGER,
+  handler_id INTEGER,
+  FOREIGN KEY (handler_id) REFERENCES handlers(id),
+  FOREIGN KEY (pet_id) REFERENCES pets(id)
+);
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h5>Create new records</h5>
+<pre><code class="language-sql">INSERT INTO handlers (name, email, phone) 
+VALUES ('gannie', 'grannie52@gmail.com', '1239087654');
+
+INSERT INTO handlers (name, email, phone) 
+VALUES ('dorian', 'blue_boy@gmail.com', '8887776666');
+
+INSERT INTO jobs (time, request, pet_id, handler_id) 
+VALUES ('2022-07-31 00:00:00', 'drop-in', 1,1);
+
+INSERT INTO jobs (time, request, pet_id, handler_id) 
+VALUES ('2022-03-01 00:00:00', 'drop-in', 1,1);
+
+INSERT INTO jobs (time, request, pet_id, handler_id) 
+VALUES ('2022-06-01 00:00:00', 'drop-in', 1,2);
+
+INSERT INTO jobs (time, request, pet_id, handler_id) 
+VALUES ('2022-05-21 00:00:00', 'walk', 2,2);
+</code></pre>
+
+            </section>
+    
+
+
+
+    
+        <section >
+            
+            <h5>READ associated records through joins</h5>
+<pre><code class="language-sql">SELECT
+  pets.name,
+  handlers.name,
+  jobs.request,
+  jobs.time
+FROM jobs
+JOIN pets
+  ON jobs.pet_id = pets.id
+JOIN handlers
+  ON jobs.handler_id = handlers.id;
+
+
+SELECT DISTINCT
+  pets.name,
+  handlers.name
+FROM jobs
+JOIN pets
+  ON jobs.pet_id = pets.id
+JOIN handlers
+  ON jobs.handler_id = handlers.id
+AND pets.name = 'Luke';
+
+</code></pre>
+
+            </section>
+    
+
+
+    </div>
+
+
+  </div>
+
+  <div class="line top"></div>
+  <div class="line bottom"></div>
+  <div class="line left"></div>
+  <div class="line right"></div>
+
+  <script src="libs/reveal.js/4.3.1/reveal.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/markdown/markdown.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/highlight/highlight.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/math/math.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/fullscreen/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/animate/svg.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/Chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/d3.v3.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3.patch.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/queue.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/d3/topojson.v1.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/anything/function-plot.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/customcontrols/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/embed-tweet/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/chart.min.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chart/plugin.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/verticator/verticator.js"></script>
+
+<script src="libs/reveal.js/4.3.1/plugin/zoom/zoom.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/search/search.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/menu/menu.js"></script>
+<script src="libs/reveal.js/4.3.1/plugin/chalkboard/plugin.js"></script>
+
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/plugin.js"></script>  -->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/recorder.js"></script>-->
+<!--	<script src="libs/reveal.js/4.3.1/plugin/audio-slideshow/RecordRTC.js"></script>-->
+
+  
+
+<script>
+  const printPlugins = [
+      RevealNotes,
+      RevealHighlight,
+      RevealMath.MathJax3,
+      RevealAnimate,
+      RevealChalkboard, 
+			RevealEmbedTweet,
+			RevealChart,
+		];
+
+		const plugins =  [...printPlugins,
+		RevealZoom, 
+		RevealSearch, 
+				RevealMarkdown, 
+				RevealMenu, 
+				RevealFullscreen,
+				RevealAnything,
+				//RevealAudioSlideshow,
+				//RevealAudioRecorder,
+				RevealCustomControls, 
+				// poll
+				// question
+				// seminar
+				Verticator 
+				 ]
+
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+      controlsTutorial: true,
+      controlsLayout: 'bottom-right',
+      controlsBackArrows: 'faded',
+      progress: true,
+      slideNumber: false,
+      //#showSlideNumber "all" "print" "speaker"
+      hash: true, //# hash: false,
+      //# respondToHashChanges: true,
+      //# history: false,
+      keyboard: true,
+      //#keyboardCondition: null,
+      overview: true,
+      center: true,
+      touch: true,
+      loop: false,
+      rtl: false,
+      //#navigationMode: 'default', linear grid
+      shuffle: false,
+      fragments: true,
+      fragmentInURL: false,
+      embedded: false,
+      help: true,
+      //#pause: true
+      showNotes: false,
+      autoPlayMedia: false, // TODO fix this to a nullable value
+      //#preloadIframes: null. true false
+      //#autoAnimate: true
+      //#autoAnimateMatcher: null,
+      //#autoAnimateEasing: 'ease',
+      //autoAnimateDuration: 1.0,
+      //#autoAnimateUnmatched: true
+      //#autoAnimateStyles: []
+      autoSlide: 0, // TODO fix this to a falseable value
+      autoSlideStoppable: true,
+      autoSlideMethod: '0',
+      defaultTiming: 120,
+      mouseWheel: false,
+      //#previewLinks: false
+      //#postMessage: true, // TODO : this can cause issues with the vscode api ???
+      //#postMessageEvents: false,
+      //#focusBodyOnPageVisibilityChange: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      //#pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+      //#pdfSeparateFragments: true,
+      //#pdfPageHeightOffset: -1,
+      viewDistance: 3,
+      //#mobileViewDistance: 2,
+      display: 'block',
+      //#hideInactiveCursor: true,
+      //#hideCursorTime: 5000
+
+      // Parallax Background
+      parallaxBackgroundImage: '',
+      parallaxBackgroundSize: '',
+      parallaxBackgroundHorizontal: 0,
+      parallaxBackgroundVertical: 0,
+
+      //Presentation Size
+      width: 960,
+			height: 700,
+			margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2,
+      disableLayout: false,
+
+      audio: {
+        prefix: 'audio/', // audio files are stored in the "audio" folder
+        suffix: '.ogg', // audio files have the ".ogg" ending
+        textToSpeechURL: null, // the URL to the text to speech converter
+        defaultNotes: false, // use slide notes as default for the text to speech converter
+        defaultText: false, // use slide text as default for the text to speech converter
+        advance: 0, // advance to next slide after given time in milliseconds after audio has played, use negative value to not advance
+        autoplay: false, // automatically start slideshow
+        defaultDuration: 5, // default duration in seconds if no audio is available
+        defaultAudios: true, // try to play audios with names such as audio/1.2.ogg
+        playerOpacity: 0.05, // opacity value of audio player if unfocused
+        playerStyle: 'position: fixed; bottom: 4px; left: 25%; width: 50%; height:75px; z-index: 33;', // style used for container of audio controls
+        startAtFragment: false, // when moving to a slide, start at the current fragment or at the start of the slide
+      },
+      
+      chalkboard: { // font-awesome.min.css must be available
+        //src: "chalkboard/chalkboard.json",
+        storage: "chalkboard-demo",
+      },
+      
+			customcontrols: {
+					controls: [
+      						{
+						  id: 'toggle-overview',
+						  title: 'Toggle overview (O)',
+						  icon: '<i class="fa fa-th"></i>',
+						  action: 'Reveal.toggleOverview();'
+						}
+						,
+      {
+        icon: '<i class="fa fa-pen-square"></i>',
+        title: 'Toggle chalkboard (B)',
+        action: 'RevealChalkboard.toggleChalkboard();'
+      },
+      {
+        icon: '<i class="fa fa-pen"></i>',
+        title: 'Toggle notes canvas (C)',
+        action: 'RevealChalkboard.toggleNotesCanvas();'
+      }
+      
+				]
+			},
+			chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+			},
+			math: {
+				mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+				config: 'TeX-AMS_HTML-full',
+				// pass other options into `MathJax.Hub.Config()`
+				TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				anything: [ 
+				{
+		className: "plot",
+		defaults: {width:500, height: 500, grid:true},
+		initialize: (function(container, options){ options.target = "#"+container.id; functionPlot(options) })
+	 },
+	 {
+		className: "chart",  
+		initialize: (function(container, options){ container.chart = new Chart(container.getContext("2d"), options);  })
+	 },
+	 {
+		className: "anything",
+		initialize: (function(container, options){ if (options && options.initialize) { options.initialize(container)} })
+	 },
+					],
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: (window.location.search.match(/print-pdf/gi) ? printPlugins : plugins ) 
+		});
+			
+
+
+	    // Change chalkboard theme : 
+		function changeTheme(input) {
+			var config = {};
+			config.theme = input.value;
+			Reveal.getPlugin("RevealChalkboard").configure(config);
+			input.blur();
+		}
+
+		// // Handle the message inside the webview
+        // window.addEventListener('message', event => {
+
+        //     const message = event.data; // The JSON data our extension sent
+
+        //     switch (message.command) {
+        //         case 'refactor':
+        //             Reveal.toggleHelp();
+        //     }
+        // });
+
+		if (window.location.search.match(/print-pdf-now/gi)) {
+      		setTimeout(() => {
+				window.print();
+			  }, 2500);
+			
+    }
+</script>
+
+</body>
+
+</html>
