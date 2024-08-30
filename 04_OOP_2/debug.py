@@ -5,6 +5,7 @@
 from lib.cat import *
 from lib.handler import *
 from lib.job import *
+from lib.owner import *
 
 # Importing the pet class
 from lib.pet import *
@@ -16,6 +17,12 @@ cookie = Pet("cookie", 1, "Dachshund", "hyper", "cookie.jpg")
 princess_grace = Cat(
     "princess grace", 7, "domestic longhair", "affectionate", "gracy.png", False
 )
+
+jess = Owner("jess", "jess@mail.com")
+chris = Owner("chris", "chris@mail.com")
+jess.add_pet(cookie)
+jess.add_pet(rose)
+chris.add_pet(princess_grace)
 
 jae = Handler("Jae", "jae@mail.com", 30)
 kevin = Handler("Kevin", "kevin@mail.com", 32)
