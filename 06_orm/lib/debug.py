@@ -9,14 +9,15 @@ from pet import Pet
 
 # CURSOR.execute(sql)
 
-# Owner.create_table()
-# frank = Owner("frank", "555-555-5555", "frank@gmail.com", "555 Somewhere St.")
-# frank.save()
+Owner.drop_table()
+Owner.create_table()
+frank = Owner("frank", "555-555-5555", "frank@gmail.com", "555 Somewhere St.")
+frank.save()
 Pet.drop_table()
 Pet.create_table()
 
 try:
-    spot = Pet("spot", "dog", "chihuahua", "feisty", 1)
+    spot = Pet("spot", "dog", "chihuahua", "feisty", frank.id)
     # spot = Pet("spot", "dog", "chihuahua")
     spot.save()
 except Exception as e:
@@ -24,7 +25,7 @@ except Exception as e:
 # finally:
 #     CONN.close()
 
-brigid = Pet.create("Brigid", "cat", "tabby", "fiesty", 2)
+brigid = Pet.create("Brigid", "cat", "tabby", "fiesty", frank.id)
 
 
 import ipdb
